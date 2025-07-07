@@ -37,11 +37,8 @@ Check out [Contributing Guidelines](CONTRIBUTING.md) for details.
 
 ## SemVer
 
-Atata Framework tries to follow [Semantic Versioning 2.0](https://semver.org/) when possible.
-Sometimes Selenium.WebDriver dependency package can contain breaking changes in minor version releases,
-so those changes can break Atata as well.
-But Atata manages its sources according to SemVer.
-Thus backward compatibility is mostly followed and updates within the same major version
+Atata Framework follows [Semantic Versioning 2.0](https://semver.org/).
+Thus backward compatibility is followed and updates within the same major version
 (e.g. from 2.1 to 2.2) should not require code changes.
 
 ## License

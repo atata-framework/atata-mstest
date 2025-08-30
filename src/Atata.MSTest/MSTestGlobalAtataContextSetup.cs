@@ -6,18 +6,6 @@
 public static class MSTestGlobalAtataContextSetup
 {
     /// <summary>
-    /// Sets up the global <see cref="AtataContext"/> using the specified test context and optional configuration action.
-    /// </summary>
-    /// <typeparam name="TGlobalFixture">The type of the global fixture.</typeparam>
-    /// <param name="testContext">The MSTest test context.</param>
-    /// <param name="configure">An action delegate to configure the global <see cref="AtataContextBuilder"/>.</param>
-    public static void SetUp<TGlobalFixture>(
-        TestContext testContext,
-        Action<AtataContextBuilder>? configure = null)
-        =>
-        SetUp(typeof(TGlobalFixture), testContext, configure);
-
-    /// <summary>
     /// Sets up the global <see cref="AtataContext"/> using the specified global fixture type, test context, and optional configuration action.
     /// </summary>
     /// <param name="globalFixtureType">The type of the global fixture.</param>

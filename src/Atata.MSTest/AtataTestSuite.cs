@@ -132,7 +132,7 @@ public abstract class AtataTestSuite
 
         foreach (var methodData in suiteConfigurationMethods)
         {
-            methodData.Method.InvokeStaticAsLambda([builder]);
+            methodData.Method.Invoke(null, [builder]);
         }
     }
 

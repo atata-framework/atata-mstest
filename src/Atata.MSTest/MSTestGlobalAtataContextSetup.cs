@@ -23,6 +23,7 @@ public static class MSTestGlobalAtataContextSetup
             throw new ArgumentNullException(nameof(testContext));
 
         TestSuiteTypeResolver.Assembly = globalFixtureType.Assembly;
+        AtataContext.GlobalProperties.RootNamespace = globalFixtureType.Namespace;
 
         AtataContextBuilder builder = AtataContext.CreateBuilder(AtataContextScope.Global)
             .UseDefaultCancellationToken(testContext.CancellationTokenSource.Token)

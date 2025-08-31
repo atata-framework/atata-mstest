@@ -6,13 +6,9 @@ public static class GlobalFixture
     [AssemblyInitialize]
     public static void SetUpAssembly(TestContext testContext)
     {
-        Type globalFixtureType = typeof(GlobalFixture);
-
-        AtataContext.GlobalProperties.UseRootNamespaceOf(globalFixtureType);
-
         AtataContext.BaseConfiguration.LogConsumers.AddNLogFile();
 
-        MSTestGlobalAtataContextSetup.SetUp(globalFixtureType, testContext);
+        MSTestGlobalAtataContextSetup.SetUp(typeof(GlobalFixture), testContext);
     }
 
     [AssemblyCleanup]

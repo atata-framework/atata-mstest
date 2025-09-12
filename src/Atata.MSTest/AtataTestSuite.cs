@@ -74,7 +74,7 @@ public abstract class AtataTestSuite
             .EventSubscriptions.Add(new AddArtifactsToMSTestContextEventHandler(TestContext));
 
         var suiteContextMetadata = s_testSuiteDataByTypeName[testClassFullName].Metadata;
-        suiteContextMetadata?.ApplyToTestBuilder(builder);
+        suiteContextMetadata?.ApplyToTestBuilder(builder, this);
 
         MethodInfo? testMethod = testClassType.GetMethod(TestContext.ManagedMethod);
 
@@ -109,17 +109,9 @@ public abstract class AtataTestSuite
         var suiteContextMetadata = TestSuiteAtataContextMetadata.GetForType(testClassType);
 
         builder.UseTestTraits(GetTraits(suiteContextMetadata.Attributes));
-        suiteContextMetadata.ApplyToTestSuiteBuilder(builder);
+        suiteContextMetadata.ApplyToTestSuiteBuilder(builder, null);
 
         return suiteContextMetadata;
-    }
-
-    private static void ApplyTestMetadata(MethodInfo testMethod, AtataContextBuilder builder)
-    {
-        var testContextMetadata = TestAtataContextMetadata.GetForMethod(testMethod);
-
-        builder.UseTestTraits(GetTraits(testContextMetadata.Attributes));
-        testContextMetadata.ApplyToTestBuilder(builder);
     }
 
     private static void FindAndInvokeSuiteConfigurationMethods(Type testClassType, AtataContextBuilder builder)
@@ -156,6 +148,14 @@ public abstract class AtataTestSuite
         }
 
         return traits;
+    }
+
+    private void ApplyTestMetadata(MethodInfo testMethod, AtataContextBuilder builder)
+    {
+        var testContextMetadata = TestAtataContextMetadata.GetForMethod(testMethod);
+
+        builder.UseTestTraits(GetTraits(testContextMetadata.Attributes));
+        testContextMetadata.ApplyToTestBuilder(builder, this);
     }
 
     private sealed class TestSuiteData

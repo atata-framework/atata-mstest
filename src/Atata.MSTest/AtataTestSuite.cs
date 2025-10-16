@@ -48,7 +48,7 @@ public abstract class AtataTestSuite
     /// The method is executed once after all tests in the suite have run.
     /// </summary>
     /// <param name="testContext">The MSTest test context.</param>
-    [ClassCleanup(InheritanceBehavior.BeforeEachDerivedClass, ClassCleanupBehavior.EndOfClass)]
+    [ClassCleanup(InheritanceBehavior.BeforeEachDerivedClass)]
     public static void TearDownSuiteAtataContext(TestContext testContext)
     {
         if (s_testSuiteDataByTypeName.TryRemove(testContext.FullyQualifiedTestClassName!, out TestSuiteData? suiteData))
@@ -76,7 +76,7 @@ public abstract class AtataTestSuite
         var suiteContextMetadata = s_testSuiteDataByTypeName[testClassFullName].Metadata;
         suiteContextMetadata?.ApplyToTestBuilder(builder, this);
 
-        MethodInfo? testMethod = testClassType.GetMethod(TestContext.ManagedMethod);
+        MethodInfo? testMethod = testClassType.GetMethod(TestContext.TestName);
 
         if (testMethod is not null)
             ApplyTestMetadata(testMethod, builder);

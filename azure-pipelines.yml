@@ -47,7 +47,7 @@ jobs:
     inputs:
       version: $(netSdkVersion)
   - task: DotNetCoreCLI@2
-    displayName: Build solution
+    displayName: Build test projects
     inputs:
       command: build
       projects: 'test/*/*Tests.csproj'

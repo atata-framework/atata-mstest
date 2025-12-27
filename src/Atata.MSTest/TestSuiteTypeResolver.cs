@@ -30,5 +30,6 @@ internal static class TestSuiteTypeResolver
     }
 
     internal static Type DoResolve(string typeName) =>
-        Assembly!.GetType(typeName, true);
+        Assembly!.GetType(typeName, true)
+            ?? throw new InvalidOperationException($"Failed to find type {typeName}.");
 }

@@ -11,6 +11,7 @@ public static class MSTestGlobalAtataContextSetup
     /// <param name="globalFixtureType">The type of the global fixture.</param>
     /// <param name="testContext">The MSTest test context.</param>
     /// <param name="configure">An action delegate to configure the global <see cref="AtataContextBuilder"/>.</param>
+    [SuppressMessage("Usage", "MSTEST0049:Flow TestContext.CancellationToken to async operations")]
     public static void SetUp(
         Type globalFixtureType,
         TestContext testContext,
@@ -23,7 +24,7 @@ public static class MSTestGlobalAtataContextSetup
         AtataContext.GlobalProperties.RootNamespace = globalFixtureType.Namespace;
 
         AtataContextBuilder builder = AtataContext.CreateBuilder(AtataContextScope.Global)
-            .UseDefaultCancellationToken(testContext.CancellationTokenSource.Token)
+            .UseDefaultCancellationToken(testContext.CancellationToken)
             .UseTestSuiteType(globalFixtureType)
             .UseAssertionExceptionFactory(MSTestAssertionExceptionFactory.Instance);
 

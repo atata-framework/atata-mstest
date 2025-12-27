@@ -25,6 +25,7 @@ public abstract class AtataTestSuite
     /// </summary>
     /// <param name="testContext">The MSTest test context.</param>
     [ClassInitialize(InheritanceBehavior.BeforeEachDerivedClass)]
+    [SuppressMessage("Usage", "MSTEST0049:Flow TestContext.CancellationToken to async operations")]
     public static void SetUpSuiteAtataContext(TestContext testContext)
     {
         string testClassFullName = testContext.FullyQualifiedTestClassName!;
@@ -60,6 +61,7 @@ public abstract class AtataTestSuite
     /// The method is executed before each test in the suite.
     /// </summary>
     [TestInitialize]
+    [SuppressMessage("Usage", "MSTEST0049:Flow TestContext.CancellationToken to async operations", Justification = "<Pending>")]
     public void SetUpTestAtataContext()
     {
         string testClassFullName = TestContext.FullyQualifiedTestClassName!;

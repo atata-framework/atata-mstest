@@ -16,11 +16,8 @@ public static class MSTestGlobalAtataContextSetup
         TestContext testContext,
         Action<AtataContextBuilder>? configure = null)
     {
-        if (globalFixtureType is null)
-            throw new ArgumentNullException(nameof(globalFixtureType));
-
-        if (testContext is null)
-            throw new ArgumentNullException(nameof(testContext));
+        Guard.ThrowIfNull(globalFixtureType);
+        Guard.ThrowIfNull(testContext);
 
         TestSuiteTypeResolver.Assembly = globalFixtureType.Assembly;
         AtataContext.GlobalProperties.RootNamespace = globalFixtureType.Namespace;

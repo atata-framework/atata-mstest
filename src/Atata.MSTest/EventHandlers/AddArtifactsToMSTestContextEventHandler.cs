@@ -10,8 +10,7 @@ public sealed class AddArtifactsToMSTestContextEventHandler : ProcessFilesOnAtat
 
     public AddArtifactsToMSTestContextEventHandler(TestContext testContext)
     {
-        if (testContext is null)
-            throw new ArgumentNullException(nameof(testContext));
+        Guard.ThrowIfNull(testContext);
 
         _testContext = testContext;
     }

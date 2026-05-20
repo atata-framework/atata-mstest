@@ -9,6 +9,99 @@
 
 *The package targets .NET 8.0 and .NET Framework 4.6.2.*
 
+## Features
+
+Atata.MSTest provides seamless integration between Atata Framework and MSTest testing framework, offering:
+
+- **Test suite and fixture base classes**. `AtataTestSuite`, `MSTestGlobalAtataContextSetup` for different testing scopes`.
+- **MSTest-aware context configuration**. Automatic integration of MSTest test names, suite names, categories, and properties.
+- **Logging**. Integration with MSTest's test output for Atata logs.
+- **Error handling**. Built-in Atata error handling (screenshots, page snapshots, etc.) on test failures and attaching artifacts to test results.
+- **Parallel test support**. Full support for MSTest's parallel execution capabilities.
+
+## Installation
+
+Install the package via .NET CLI:
+
+```bash
+dotnet add package Atata.MSTest
+```
+
+Or using Package Manager:
+
+```powershell
+Install-Package Atata.MSTest
+```
+
+## Usage
+
+### Global fixture
+
+For global setup across all test suites, create a static class in a project root like below, which calls methods of `MSTestGlobalAtataContextSetup`:
+
+```cs
+[TestClass]
+public static class GlobalFixture
+{
+    [AssemblyInitialize]
+    public static void SetUpAssembly(TestContext testContext)
+    {
+        ConfigureAtataContextBaseConfiguration(AtataContext.BaseConfiguration);
+
+        MSTestGlobalAtataContextSetup.SetUp(typeof(GlobalFixture), testContext, ConfigureGlobalAtataContext);
+    }
+
+    [AssemblyCleanup]
+    public static void TearDownAssembly(TestContext testContext) =>
+        MSTestGlobalAtataContextSetup.TearDown(testContext);
+
+    private static void ConfigureAtataContextBaseConfiguration(AtataContextBuilder builder)
+    {
+        // Configure base AtataContext configuration
+    }
+
+    private static void ConfigureGlobalAtataContext(AtataContextBuilder builder)
+    {
+        // Configure global AtataContext
+    }
+}
+```
+
+### Test suite class
+
+Create a test class that inherits from `AtataTestSuite`:
+
+```cs
+[TestClass]
+public sealed class SampleTests : AtataTestSuite
+{
+    [TestMethod]
+    public void SampleTest()
+    {
+        // Test method implementation
+    }
+
+    [ConfiguresSuiteAtataContext]
+    public static void ConfigureSuiteAtataContext(AtataContextBuilder builder)
+    {
+        // Optional test suite-specific configuration
+    }
+
+    protected override void ConfigureTestAtataContext(AtataContextBuilder builder)
+    {
+        // Optional test method-specific configuration
+    }
+}
+```
+
+Please notice and follow the signature of `ConfigureSuiteAtataContext` method,
+which can have different name, but should be static, have `AtataContextBuilder` parameter,
+and be marked with `[ConfiguresSuiteAtataContext]` attribute.
+
+## Examples
+
+Check out example project: [Atata Samples / Using MSTest](https://github.com/atata-framework/atata-samples/tree/main/MSTest)
+
 ## Community
 
 - Slack: [https://atata-framework.slack.com](https://join.slack.com/t/atata-framework/shared_invite/zt-5j3lyln7-WD1ZtMDzXBhPm0yXLDBzbA)

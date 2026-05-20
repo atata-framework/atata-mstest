@@ -98,6 +98,10 @@ Please notice and follow the signature of `ConfigureSuiteAtataContext` method,
 which can have different name, but should be static, have `AtataContextBuilder` parameter,
 and be marked with `[ConfiguresSuiteAtataContext]` attribute.
 
+Use `Context` property of the base class to access the current `AtataContext` instance.
+
+Use `TestContext` property of the base class to access the current MSTest `TestContext` instance.
+
 ## Examples
 
 Check out example project: [Atata Samples / Using MSTest](https://github.com/atata-framework/atata-samples/tree/main/MSTest)
